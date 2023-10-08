@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    overflow: hidden; /* Add this line to contain the bulletin board */
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.message-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.bulletin-board {
+    border: 2px solid #333;
+    min-height: 200px;
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Add styles for the message elements */
+.message {
+    white-space: nowrap;
+    position: absolute;
+    right: 100%;
+    animation: moveLeft 15s linear forwards;
+}
+
+@keyframes moveLeft {
+    from {
+        left: 100%; /* Start from the right edge of the bulletin */
+    }
+    to {
+        left: -100%; /* Move to the left edge of the bulletin */
+    }
+}
+
+.message:nth-child(odd) {
+    padding-top: 10px;
+}
+
+.message:nth-child(even) {
+    padding-top: 10px;
+}

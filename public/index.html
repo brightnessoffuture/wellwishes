@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <script>
+        const socket = io();
+        socket.on('new message', function(msg){
+          // Add your code to display the message here
+        });
+      </script>
+    <title>Message Bulletin Board</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Message Bulletin Board</h1>
+        <div class="message-input">
+            <input type="text" id="messageInput" placeholder="Enter your message">
+            <button id="postButton">Post</button>
+        </div>
+        <div class="bulletin-board">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="active-message-list">
+            <h2>Active Message List</h2>
+            <ul id="activeMessages">
+                <!-- Active messages will be listed here -->
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
