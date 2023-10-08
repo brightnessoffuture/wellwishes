@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastPostTime = Date.now(); // Track the timestamp of the last post
     const maxActiveMessages = 5; // Maximum number of active messages
 
+    const socket = io();  // Initialize Socket.IO
+
     postButton.addEventListener('click', postMessage);
 
     // Add event listener for Enter key press only when input box is focused
@@ -15,49 +17,57 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Listen for new messages from the server
+    socket.on('new message', function (msg) {
+        displayMessage(msg);
+    });
+
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.textContent = messageText;
-
-            // Calculate a random line that is not already occupied
-            const randomLine = getRandomLine(bulletinBoard);
-
-            // Detect and resolve collisions
-            const collisionResolvedTop = resolveCollision(messageElement, randomLine);
-
-            // Set the top position for the message
-            messageElement.style.top = collisionResolvedTop + 'px';
-
-            bulletinBoard.appendChild(messageElement);
-
-            // Clear the input field
+            socket.emit('new message', messageText);  // Send the message to the server
             messageInput.value = '';
-
-            // Animate the message
-            animateMessage(messageElement);
-
-            // Update the last post time
-            lastPostTime = Date.now();
-
-            // Add the message to the Active Message List
-            const messageListItem = createActiveMessageItem(messageText);
-            activeMessagesList.appendChild(messageListItem);
-
-            // Check if the Active Message List has exceeded the maximum limit
-            if (activeMessagesList.children.length > maxActiveMessages) {
-                // Remove the oldest message from the Active Message List
-                const oldestMessage = activeMessagesList.firstElementChild;
-                activeMessagesList.removeChild(oldestMessage);
-                // Clear the repost timer for the removed message
-                clearRepostTimer(oldestMessage.textContent);
-            }
-
-            // Schedule reposting of the message
-            scheduleRepost(messageText, messageElement);
         }
+    }
+
+    function displayMessage(messageText) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.textContent = messageText;
+
+        // Calculate a random line that is not already occupied
+        const randomLine = getRandomLine(bulletinBoard);
+
+        // Detect and resolve collisions
+        const collisionResolvedTop = resolveCollision(messageElement, randomLine);
+
+        // Set the top position for the message
+        messageElement.style.top = collisionResolvedTop + 'px';
+
+        bulletinBoard.appendChild(messageElement);
+
+        // Animate the message
+        animateMessage(messageElement);
+
+        // Update the last post time
+        lastPostTime = Date.now();
+
+        // Add the message to the Active Message List
+        const messageListItem = createActiveMessageItem(messageText);
+        activeMessagesList.appendChild(messageListItem);
+
+        // Check if the Active Message List has exceeded the maximum limit
+        if (activeMessagesList.children.length > maxActiveMessages) {
+            // Remove the oldest message from the Active Message List
+            const oldestMessage = activeMessagesList.firstElementChild;
+            activeMessagesList.removeChild(oldestMessage);
+            // Clear the repost timer for the removed message
+            clearRepostTimer(oldestMessage.textContent);
+        }
+
+        // Schedule reposting of the message
+        scheduleRepost(messageText, messageElement);
+    
     }
 
     function getRandomLine(bulletinBoard) {
