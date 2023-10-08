@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const bulletinBoard = document.querySelector('.bulletin-board');
     const activeMessagesList = document.getElementById('activeMessages');
     let lastPostTime = Date.now(); // Track the timestamp of the last post
-    const maxActiveMessages = 5; // Maximum number of active messages
+    const maxActiveMessages = 20; // Maximum number of active messages
 
     const socket = io();  // Initialize Socket.IO
 
@@ -22,10 +22,34 @@ document.addEventListener("DOMContentLoaded", function () {
         displayMessage(msg);
     });
 
+    function addPendingMessage(messageText) {
+        const pendingMessagesList = document.getElementById('pendingMessages');
+        const pendingMessageItem = document.createElement('li');
+        pendingMessageItem.textContent = messageText;
+        
+        const approveButton = document.createElement('button');
+        approveButton.textContent = 'Approve';
+        approveButton.addEventListener('click', function () {
+            displayMessage(messageText);
+            pendingMessagesList.removeChild(pendingMessageItem);
+        });
+        
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function () {
+            pendingMessagesList.removeChild(pendingMessageItem);
+        });
+        
+        pendingMessageItem.appendChild(approveButton);
+        pendingMessageItem.appendChild(deleteButton);
+        pendingMessagesList.appendChild(pendingMessageItem);
+    }
+
+    // Modify the existing postMessage function to call addPendingMessage
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            socket.emit('new message', messageText);  // Send the message to the server
+            addPendingMessage(messageText);  // Call addPendingMessage instead of emitting a socket event
             messageInput.value = '';
         }
     }
@@ -98,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 2;
+                posX -= 1;
                 messageElement.style.left = posX + 'px';
                 requestAnimationFrame(step);
             }
