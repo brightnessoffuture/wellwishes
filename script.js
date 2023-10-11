@@ -11,10 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
 
     socket.emit('join', 'user'); // Join the "user" room
-
-    const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
-
-    socket.emit('join', 'moderator'); // Join the "moderator" room
     
     socket.on('approved message', function(msg) {
         displayMessage(msg); // Display the approved message
@@ -40,11 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
         pendingMessageItem.textContent = messageText;
         
         const approveButton = document.createElement('button');
-        approveButton.textContent = 'Approve';
-        approveButton.addEventListener('click', function () {
-            displayMessage(messageText);
-            pendingMessagesList.removeChild(pendingMessageItem);
-        });
+approveButton.textContent = 'Approve';
+approveButton.addEventListener('click', function () {
+    socket.emit('approve message', messageText); // Emit an event to approve the message
+    pendingMessagesList.removeChild(pendingMessageItem);
+});
         
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
