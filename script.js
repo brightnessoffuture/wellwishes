@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // If on moderator view
         socket.emit('join', 'moderator');
     } else {
+        console.log("Joining user room");
         // If on user view
         socket.emit('join', 'user');
     }
@@ -23,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     socket.on('load approved messages', function(messages) {
-        console.log("Received approved messages:", messages); // Add this line
+        console.log("Received approved messages:", messages); 
         for (let msg of messages) {
             displayMessage(msg);
         }
@@ -156,7 +157,7 @@ approveButton.addEventListener('click', function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 0.1;
+                posX -= 0.05;
                 messageElement.style.left = posX + 'px';
                 setTimeout(() => {
                     requestAnimationFrame(step);
