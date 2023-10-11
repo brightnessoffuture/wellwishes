@@ -171,10 +171,11 @@ approveButton.addEventListener('click', function () {
     const repostTimers = new Map();
 
     function scheduleRepost(messageText, messageElement) {
-        // Set a timer to repost the message every 5 seconds
-        const repostTimer = setInterval(() => {
-            postMessageFromActiveList(messageText);
-        }, 10000);
+// Random delay between 5 to 15 seconds for example
+let randomRepostDelay = 7000 + Math.random() * 5000; 
+const repostTimer = setInterval(() => {
+    postMessageFromActiveList(messageText);
+}, randomRepostDelay);
 
         // Store the timer for later reference (associated with the message text)
         repostTimers.set(messageText, repostTimer);
