@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const socket = io();  // Initialize Socket.IO
 
+    const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
+
+    socket.emit('join', 'user'); // Join the "user" room
+
+    const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
+
+    socket.emit('join', 'moderator'); // Join the "moderator" room
+    
+    socket.on('approved message', function(msg) {
+        displayMessage(msg); // Display the approved message
+    });
+
     postButton.addEventListener('click', postMessage);
 
     // Add event listener for Enter key press only when input box is focused
@@ -49,7 +61,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            addPendingMessage(messageText);  // Call addPendingMessage instead of emitting a socket event
+            // Check if we're on the user or moderator view
+            if (document.getElementById('pendingMessages')) {
+                // Moderator view: Add message to pending area
+                addPendingMessage(messageText);
+            } else {
+                // User view: Emit the message to the server
+                socket.emit('new message', messageText);
+            }
             messageInput.value = '';
         }
     }
