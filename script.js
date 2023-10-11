@@ -27,10 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    socket.on('new message', function(msg) {
-        addPendingMessage(msg);  // Add the received message to the pending list
-    });
-
     socket.on('approved message', function(msg) {
         displayMessage(msg); // Display the approved message
     });
@@ -48,6 +44,13 @@ document.addEventListener("DOMContentLoaded", function () {
     socket.on('new message', function (msg) {
         displayMessage(msg);
     });
+
+    if (bulletinBoard) {
+        // Only execute this block if bulletinBoard exists in the current HTML file
+        socket.on('new message', function (msg) {
+            displayMessage(msg);
+        });
+    }
 
     function addPendingMessage(messageText) {
         const pendingMessagesList = document.getElementById('pendingMessages');
