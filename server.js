@@ -20,6 +20,7 @@ io.on('connection', (socket) => {
         if (room === 'moderator') {
             // Send all pending messages to the moderator
             socket.emit('load pending messages', pendingMessages);
+            socket.emit('load approved messages', approvedMessages);
         } else if (room === 'user') {
           console.log("Sending approved messages to user");
             // Send all approved messages to the user
