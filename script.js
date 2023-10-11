@@ -9,9 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const socket = io();  // Initialize Socket.IO
 
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
-
+    socket.emit('join', 'moderator'); // Join the "moderator" room
     socket.emit('join', 'user'); // Join the "user" room
     
+    socket.on('new message', function(msg) {
+        addPendingMessage(msg);  // Add the received message to the pending list
+    });
+
     socket.on('approved message', function(msg) {
         displayMessage(msg); // Display the approved message
     });
