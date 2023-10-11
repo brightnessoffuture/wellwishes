@@ -40,15 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Listen for new messages from the server
-    socket.on('new message', function (msg) {
-        displayMessage(msg);
-    });
-
     if (bulletinBoard) {
         // Only execute this block if bulletinBoard exists in the current HTML file
         socket.on('new message', function (msg) {
-            displayMessage(msg);
+            addPendingMessage(msg);
         });
     }
 
