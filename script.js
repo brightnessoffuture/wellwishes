@@ -16,12 +16,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     socket.on('load pending messages', function(messages) {
+        console.log("Received pending messages:", messages); // Add this line
         for (let msg of messages) {
             addPendingMessage(msg);
         }
     });
     
     socket.on('load approved messages', function(messages) {
+        console.log("Received approved messages:", messages); // Add this line
         for (let msg of messages) {
             displayMessage(msg);
         }
@@ -156,7 +158,9 @@ approveButton.addEventListener('click', function () {
             } else {
                 posX -= 0.1;
                 messageElement.style.left = posX + 'px';
-                requestAnimationFrame(step);
+                setTimeout(() => {
+                    requestAnimationFrame(step);
+                }, 30); // 30 milliseconds delay between frames
             }
         }
 
