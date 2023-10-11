@@ -73,18 +73,17 @@ approveButton.addEventListener('click', function () {
         pendingMessagesList.appendChild(pendingMessageItem);
     }
 
-    // Modify the existing postMessage function to call addPendingMessage
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            // Check if we're on the user or moderator view
+            // Always emit the message to the server
+            socket.emit('new message', messageText);
+            
+            // If on moderator view, also add to the pending area
             if (document.getElementById('pendingMessages')) {
-                // Moderator view: Add message to pending area
                 addPendingMessage(messageText);
-            } else {
-                // User view: Emit the message to the server
-                socket.emit('new message', messageText);
             }
+            
             messageInput.value = '';
         }
     }
@@ -154,7 +153,7 @@ approveButton.addEventListener('click', function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 1;  // Adjust this value to control the speed. Higher value = faster, Lower value = slower
+                posX -= 2;  // Adjust this value to control the speed. Higher value = faster, Lower value = slower
                 messageElement.style.left = posX + 'px';
                 requestAnimationFrame(step);
             }
