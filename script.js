@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const messageInput = document.getElementById('messageInput');
     const postButton = document.getElementById('postButton');
     const bulletinBoard = document.querySelector('.bulletin-board');
-    const activeMessagesList = document.getElementById('activeMessages');
+    const approvedMessagesList = document.getElementById('approvedMessages');
     let lastPostTime = Date.now(); // Track the timestamp of the last post
-    const maxActiveMessages = 20; // Maximum number of active messages
+    const maxApprovedMessages = 20; // Maximum number of active messages
 
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     if (document.getElementById('pendingMessages')) {
@@ -78,12 +78,6 @@ approveButton.addEventListener('click', function () {
         if (messageText !== '') {
             // Always emit the message to the server
             socket.emit('new message', messageText);
-            
-            // If on moderator view, also add to the pending area
-            if (document.getElementById('pendingMessages')) {
-                addPendingMessage(messageText);
-            }
-            
             messageInput.value = '';
         }
     }
@@ -111,14 +105,14 @@ approveButton.addEventListener('click', function () {
         lastPostTime = Date.now();
 
         // Add the message to the Active Message List
-        const messageListItem = createActiveMessageItem(messageText);
-        activeMessagesList.appendChild(messageListItem);
+        const messageListItem = createApprovedMessageItem(messageText);
+        approvedMessagesList.appendChild(messageListItem);
 
         // Check if the Active Message List has exceeded the maximum limit
-        if (activeMessagesList.children.length > maxActiveMessages) {
+        if (approvedMessagesList.children.length > maxApprovedMessages) {
             // Remove the oldest message from the Active Message List
-            const oldestMessage = activeMessagesList.firstElementChild;
-            activeMessagesList.removeChild(oldestMessage);
+            const oldestMessage = approvedMessagesList.firstElementChild;
+            approvedMessagesList.removeChild(oldestMessage);
             // Clear the repost timer for the removed message
             clearRepostTimer(oldestMessage.textContent);
         }
@@ -163,7 +157,7 @@ approveButton.addEventListener('click', function () {
         requestAnimationFrame(step);
     }
 
-    function createActiveMessageItem(messageText) {
+    function createApprovedMessageItem(messageText) {
         const messageListItem = document.createElement('li');
         messageListItem.textContent = messageText;
         return messageListItem;
@@ -175,7 +169,7 @@ approveButton.addEventListener('click', function () {
         // Set a timer to repost the message every 5 seconds
         const repostTimer = setInterval(() => {
             postMessageFromActiveList(messageText);
-        }, 5000);
+        }, 10000);
 
         // Store the timer for later reference (associated with the message text)
         repostTimers.set(messageText, repostTimer);
