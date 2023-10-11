@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     if (document.getElementById('pendingMessages')) {
+        console.log("Joining moderator room");  // Add this line
         // If on moderator view
         socket.emit('join', 'moderator');
     } else {
@@ -147,7 +148,7 @@ approveButton.addEventListener('click', function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 2;  // Adjust this value to control the speed. Higher value = faster, Lower value = slower
+                posX -= 1.5;  // Adjust this value to control the speed. Higher value = faster, Lower value = slower
                 messageElement.style.left = posX + 'px';
                 requestAnimationFrame(step);
             }
