@@ -6,11 +6,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastPostTime = Date.now(); // Track the timestamp of the last post
     const maxActiveMessages = 20; // Maximum number of active messages
 
-    const socket = io();  // Initialize Socket.IO
-
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
-    socket.emit('join', 'moderator'); // Join the "moderator" room
-    socket.emit('join', 'user'); // Join the "user" room
+    if (document.getElementById('pendingMessages')) {
+        // If on moderator view
+        socket.emit('join', 'moderator');
+    } else {
+        // If on user view
+        socket.emit('join', 'user');
+    }
     
     socket.on('new message', function(msg) {
         addPendingMessage(msg);  // Add the received message to the pending list
