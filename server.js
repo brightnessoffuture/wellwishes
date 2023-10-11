@@ -22,9 +22,7 @@ io.on('connection', (socket) => {
             socket.emit('load pending messages', pendingMessages);
             socket.emit('load approved messages', approvedMessages);
         } else if (room === 'user') {
-          console.log("Sending approved messages to user");
-            // Send all approved messages to the user
-            socket.emit('load approved messages', approvedMessages);}
+          }
     });
 
     socket.on('new message', (msg) => {

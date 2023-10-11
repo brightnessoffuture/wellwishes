@@ -26,9 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
     
     socket.on('load approved messages', function(messages) {
         console.log("Received approved messages:", messages); 
-        for (let msg of messages) {
-            displayMessage(msg);
-        }
+        messages.forEach((msg, index) => {
+            // Introduce a random delay for each message, e.g., between 0 to 5 seconds
+            let randomDelay = Math.random() * 3000; 
+            setTimeout(() => {
+                displayMessage(msg);
+            }, randomDelay);
+        });
     });
 
     socket.on('approved message', function(msg) {
