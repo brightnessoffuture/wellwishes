@@ -144,27 +144,22 @@ approveButton.addEventListener('click', function () {
     }
 
     function animateMessage(messageElement) {
-        // Get the width of the bulletin board
-        const bulletinWidth = bulletinBoard.clientWidth;
         const messageWidth = messageElement.offsetWidth;
-
         let posX = window.innerWidth;
-
+    
         messageElement.style.left = posX + 'px';
-
+    
         function step() {
             if (posX < -messageWidth) {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 0.05;
+                posX -= 1;  // Adjust this value to control the speed. Higher value = faster, Lower value = slower
                 messageElement.style.left = posX + 'px';
-                setTimeout(() => {
-                    requestAnimationFrame(step);
-                }, 100); // milliseconds delay between frames
+                requestAnimationFrame(step);
             }
         }
-
+    
         // Start the animation
         requestAnimationFrame(step);
     }

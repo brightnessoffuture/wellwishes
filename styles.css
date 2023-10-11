@@ -64,7 +64,7 @@ button {
     white-space: nowrap;
     position: absolute;
     right: 100%;
-    animation: moveLeft 15s linear forwards;
+    /* animation: moveLeft 25s linear forwards;*/
 }
 
 @keyframes moveLeft {
