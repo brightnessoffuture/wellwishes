@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 1;
+                posX -= 0.5;
                 messageElement.style.left = posX + 'px';
                 requestAnimationFrame(step);
             }
