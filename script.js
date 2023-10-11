@@ -160,7 +160,7 @@ approveButton.addEventListener('click', function () {
                 messageElement.style.left = posX + 'px';
                 setTimeout(() => {
                     requestAnimationFrame(step);
-                }, 30); // 30 milliseconds delay between frames
+                }, 100); // milliseconds delay between frames
             }
         }
 

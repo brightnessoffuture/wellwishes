@@ -39,6 +39,8 @@ io.on('connection', (socket) => {
         pendingMessages.splice(index, 1);
         approvedMessages.push(msg);
     }
+    console.log("Approved messages:", approvedMessages);
+console.log("Pending messages:", pendingMessages);
         // When a moderator approves a message, emit it to all users (including other moderators)
         io.emit('approved message', msg);
     });
