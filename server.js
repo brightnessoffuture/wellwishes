@@ -7,6 +7,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const pendingMessages = [];
+const approvedMessages = [];
+
 app.use(express.static(__dirname));
 
 io.on('connection', (socket) => {
@@ -14,14 +17,28 @@ io.on('connection', (socket) => {
 
     socket.on('join', (room) => {
         socket.join(room);
+        if (room === 'moderator') {
+            // Send all pending messages to the moderator
+            socket.emit('load pending messages', pendingMessages);
+        } else if (room === 'user') {
+            // Send all approved messages to the user
+            socket.emit('load approved messages', approvedMessages);}
     });
 
     socket.on('new message', (msg) => {
+      // Add message to pending messages
+    pendingMessages.push(msg);
         // When a user sends a message, emit it to the moderator's room
         io.to('moderator').emit('new message', msg);
     });
 
     socket.on('approve message', (msg) => {
+      // Move the message from pending to approved
+    const index = pendingMessages.indexOf(msg);
+    if (index > -1) {
+        pendingMessages.splice(index, 1);
+        approvedMessages.push(msg);
+    }
         // When a moderator approves a message, emit it to all users (including other moderators)
         io.emit('approved message', msg);
     });

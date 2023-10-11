@@ -15,6 +15,18 @@ document.addEventListener("DOMContentLoaded", function () {
         socket.emit('join', 'user');
     }
     
+    socket.on('load pending messages', function(messages) {
+        for (let msg of messages) {
+            addPendingMessage(msg);
+        }
+    });
+    
+    socket.on('load approved messages', function(messages) {
+        for (let msg of messages) {
+            displayMessage(msg);
+        }
+    });
+
     socket.on('new message', function(msg) {
         addPendingMessage(msg);  // Add the received message to the pending list
     });
@@ -144,7 +156,7 @@ approveButton.addEventListener('click', function () {
                 // Remove the message after it passes the left edge of the bulletin
                 messageElement.remove();
             } else {
-                posX -= 0.5;
+                posX -= 0.1;
                 messageElement.style.left = posX + 'px';
                 requestAnimationFrame(step);
             }
