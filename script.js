@@ -165,6 +165,27 @@ approveButton.addEventListener('click', function () {
     function createApprovedMessageItem(messageText) {
         const messageListItem = document.createElement('li');
         messageListItem.textContent = messageText;
+    
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function () {
+            // Remove from approved message list
+            approvedMessagesList.removeChild(messageListItem);
+            
+            // Remove from the bulletin board
+            const bulletinMessages = bulletinBoard.querySelectorAll('.message');
+            for (const msgElement of bulletinMessages) {
+                if (msgElement.textContent === messageText) {
+                    msgElement.remove();
+                }
+            }
+    
+            // Clear the repost timer for the removed message
+            clearRepostTimer(messageText);
+        });
+    
+        messageListItem.appendChild(deleteButton);
+        
         return messageListItem;
     }
 
