@@ -108,6 +108,7 @@ approveButton.addEventListener('click', function () {
 
 }
 
+
     function displayMessage(messageText) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
@@ -129,10 +130,6 @@ approveButton.addEventListener('click', function () {
 
         // Update the last post time
         lastPostTime = Date.now();
-
-        // Add the message to the Active Message List
-        const messageListItem = createApprovedMessageItem(messageText);
-        approvedMessagesList.appendChild(messageListItem);
 
         // Check if the Active Message List has exceeded the maximum limit
         if (approvedMessagesList.children.length > maxApprovedMessages) {
@@ -223,37 +220,34 @@ approveButton.addEventListener('click', function () {
         // Random delay between 5 to 15 seconds for example
         let randomRepostDelay = 7000 + Math.random() * 5000;
         const repostTimer = setInterval(() => {
-            postMessageFromActiveList();
+            postMessageFromActiveList(messageText);  // pass the messageText argument here
         }, randomRepostDelay);
     
         // Store the timer for later reference (associated with the message text)
         repostTimers.set(messageText, repostTimer);
     }
     
-    function postMessageFromActiveList() {
-        if (approvedMessagesArray.length > 0) {
-            const randomIndex = Math.floor(Math.random() * approvedMessagesArray.length);
-            const messageText = approvedMessagesArray[randomIndex];
-            // Create a new message element and post it to the bulletin board
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.textContent = messageText;
-
+    function postMessageFromActiveList(messageText) {  // accept a messageText argument here
+        // Create a new message element and post it to the bulletin board
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.textContent = messageText;
+    
         // Calculate a random line that is not already occupied
         const randomLine = getRandomLine(bulletinBoard);
-
+    
         // Detect and resolve collisions
         const collisionResolvedTop = resolveCollision(messageElement, randomLine);
-
+    
         // Set the top position for the message
         messageElement.style.top = collisionResolvedTop + 'px';
-
+    
         bulletinBoard.appendChild(messageElement);
-
+    
         // Animate the message
         animateMessage(messageElement);
     }
-}
+
 
     function resolveCollision(newMessageElement, desiredTop) {
         // Get the height of a message (line height)
