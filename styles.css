@@ -105,3 +105,19 @@ button {
     justify-content: space-between;
     align-items: center;
 }
+
+#flex-container {
+    display: flex;
+    align-items: center; /* Vertically center aligns items */
+    margin: 0 auto;
+    max-width: 800px; /* Adjust the width as needed */
+}
+
+#qr-code {
+    flex: 1; /* Gives equal weight, ensuring that the space is distributed equally between the qr-code and text divs */
+}
+
+#text {
+    flex: 1; /* Gives equal weight, ensuring that the space is distributed equally between the qr-code and text divs */
+    text-align: left; /* Aligns the text to the left */
+}
