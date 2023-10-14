@@ -40,6 +40,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         messageElement.remove();
                     }
                 });
+                const messageIndex = approvedMessagesArray.indexOf(messageText);
+                if (messageIndex > -1) {
+                    approvedMessagesArray.splice(messageIndex, 1);
+                }
                 // Clear the repost timer for the deleted message
                 clearRepostTimer(messageText);
             }
@@ -297,11 +301,11 @@ approveButton.addEventListener('click', function () {
     }
 
     function clearRepostTimer(messageText) {
-        // Clear the repost timer associated with a message text
         const repostTimer = repostTimers.get(messageText);
         if (repostTimer) {
             clearInterval(repostTimer);
             repostTimers.delete(messageText);
+            console.log('Cleared repost timer for:', messageText);  // Add this line
         }
     }
 });
