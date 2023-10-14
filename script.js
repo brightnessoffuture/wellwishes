@@ -23,6 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
             approvedMessagesArray.push(msg);  // Add the approved message to the array
             scheduleRepost(msg);  // Schedule reposting for the new message
         });
+
+        socket.on('load approved messages', function (messages) {
+            console.log("Received approved messages:", messages);
+            messages.forEach((msg, index) => {
+                let randomDelay = Math.random() * 3000;
+                setTimeout(() => {
+                    displayMessage(msg);
+                }, randomDelay);
+            });
+        });
     }
 
     function initMain() {
@@ -217,6 +227,7 @@ approveButton.addEventListener('click', function () {
     const repostTimers = new Map();
 
     function scheduleRepost(messageText) {
+        console.log('Scheduling repost for:', messageText);
         // Random delay between 5 to 15 seconds for example
         let randomRepostDelay = 7000 + Math.random() * 5000;
         const repostTimer = setInterval(() => {
@@ -228,6 +239,7 @@ approveButton.addEventListener('click', function () {
     }
     
     function postMessageFromActiveList(messageText) {  // accept a messageText argument here
+        console.log('Reposting message:', messageText);
         // Create a new message element and post it to the bulletin board
         const messageElement = document.createElement('div');
         messageElement.classList.add('message');
