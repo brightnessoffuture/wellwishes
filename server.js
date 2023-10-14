@@ -22,7 +22,12 @@ io.on('connection', (socket) => {
             socket.emit('load pending messages', pendingMessages);
             socket.emit('load approved messages', approvedMessages);
         } else if (room === 'user') {
-          }
+            // logic for users, if any
+        } else if (room === 'board') {
+            // If on board view, send all approved messages to the board
+            console.log("Joining board room");
+            socket.emit('load approved messages', approvedMessages);
+        }
     });
 
     socket.on('new message', (msg) => {
@@ -48,6 +53,15 @@ console.log("Pending messages:", pendingMessages);
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+
+    socket.on('delete message', (msg, listType) => {
+        let list = listType === 'approved' ? approvedMessages : pendingMessages;
+        const index = list.indexOf(msg);
+        if (index > -1) {
+            list.splice(index, 1);
+        }
+        console.log(`${listType} messages after delete:`, list);
+    });
 });
 
 const PORT = process.env.PORT || 3000;
@@ -56,11 +70,3 @@ server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-socket.on('delete message', (msg, listType) => {
-    let list = listType === 'approved' ? approvedMessages : pendingMessages;
-    const index = list.indexOf(msg);
-    if (index > -1) {
-        list.splice(index, 1);
-    }
-    console.log(`${listType} messages after delete:`, list);
-});

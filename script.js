@@ -1,52 +1,65 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const messageInput = document.getElementById('messageInput');
-    const postButton = document.getElementById('postButton');
-    const bulletinBoard = document.querySelector('.bulletin-board');
-    const approvedMessagesList = document.getElementById('approvedMessages');
-    let lastPostTime = Date.now(); // Track the timestamp of the last post
-    const maxApprovedMessages = 20; // Maximum number of active messages
-
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
-    if (document.getElementById('pendingMessages')) {
-        console.log("Joining moderator room");  // Add this line
-        // If on moderator view
-        socket.emit('join', 'moderator');
+    const bulletinBoard = document.querySelector('.bulletin-board');
+
+    if (bulletinBoard) {
+        initBoard();
     } else {
-        console.log("Joining user room");
-        // If on user view
-        socket.emit('join', 'user');
+        initMain();
     }
-    
-    socket.on('load pending messages', function(messages) {
-        console.log("Received pending messages:", messages); // Add this line
-        for (let msg of messages) {
-            addPendingMessage(msg);
-        }
-    });
-    
-    socket.on('load approved messages', function(messages) {
-        console.log("Received approved messages:", messages); 
-        messages.forEach((msg, index) => {
-            // Introduce a random delay for each message, e.g., between 0 to 5 seconds
-            let randomDelay = Math.random() * 3000; 
-            setTimeout(() => {
-                displayMessage(msg);
-            }, randomDelay);
+
+    function initBoard() {
+        console.log("Joining board room");
+        socket.emit('join', 'board');
+
+        socket.on('approved message', function (msg) {
+            displayMessage(msg); // Display the approved message on board.html
         });
-    });
+    }
 
-    socket.on('approved message', function(msg) {
-        displayMessage(msg); // Display the approved message
-    });
+    function initMain() {
+        const messageInput = document.getElementById('messageInput');
+        const postButton = document.getElementById('postButton');
+        const approvedMessagesList = document.getElementById('approvedMessages');
+        let lastPostTime = Date.now();
+        const maxApprovedMessages = 20;
 
-    postButton.addEventListener('click', postMessage);
-
-    // Add event listener for Enter key press only when input box is focused
-    messageInput.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' && document.activeElement === messageInput) {
-            postMessage();
+        if (document.getElementById('pendingMessages')) {
+            console.log("Joining moderator room");
+            socket.emit('join', 'moderator');
+        } else {
+            console.log("Joining user room");
+            socket.emit('join', 'user');
         }
-    });
+
+        socket.on('load pending messages', function (messages) {
+            console.log("Received pending messages:", messages);
+            for (let msg of messages) {
+                addPendingMessage(msg);
+            }
+        });
+
+        socket.on('load approved messages', function (messages) {
+            console.log("Received approved messages:", messages);
+            messages.forEach((msg, index) => {
+                let randomDelay = Math.random() * 3000;
+                setTimeout(() => {
+                    displayMessage(msg);
+                }, randomDelay);
+            });
+        });
+
+        socket.on('approved message', function (msg) {
+            displayMessage(msg);
+        });
+
+        postButton.addEventListener('click', postMessage);
+
+        messageInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && document.activeElement === messageInput) {
+                postMessage();
+            }
+        });
 
     if (bulletinBoard) {
         // Only execute this block if bulletinBoard exists in the current HTML file
@@ -87,6 +100,8 @@ approveButton.addEventListener('click', function () {
             messageInput.value = '';
         }
     }
+
+}
 
     function displayMessage(messageText) {
         const messageElement = document.createElement('div');
