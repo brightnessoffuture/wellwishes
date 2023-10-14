@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     const bulletinBoard = document.querySelector('.bulletin-board');
+    const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
     const approvedMessagesList = document.getElementById('approvedMessages');
     let lastPostTime = Date.now();
     const maxApprovedMessages = 20;
 
-    if (bulletinBoard) {
+    if (qrCode) {
         initBoard();
     } else {
         initMain();
