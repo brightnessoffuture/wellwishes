@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const approvedMessagesList = document.getElementById('approvedMessages');
     let lastPostTime = Date.now();
     const maxApprovedMessages = 20;
+    const approvedMessagesArray = [];
+
 
     if (qrCode) {
         initBoard();
@@ -18,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         socket.on('approved message', function (msg) {
             displayMessage(msg); // Display the approved message on board.html
+            approvedMessagesArray.push(msg);  // Add the approved message to the array
+            scheduleRepost(msg);  // Schedule reposting for the new message
         });
     }
 
@@ -141,6 +145,11 @@ approveButton.addEventListener('click', function () {
 
         // Schedule reposting of the message
         scheduleRepost(messageText, messageElement);
+
+        if (approvedMessagesList) {  // Check if approvedMessagesList is not null
+            const messageListItem = createApprovedMessageItem(messageText);
+            approvedMessagesList.appendChild(messageListItem);
+        }
     
     }
 
@@ -210,16 +219,17 @@ approveButton.addEventListener('click', function () {
 
     const repostTimers = new Map();
 
-    function scheduleRepost(messageText, messageElement) {
-// Random delay between 5 to 15 seconds for example
-let randomRepostDelay = 7000 + Math.random() * 5000; 
-const repostTimer = setInterval(() => {
-    postMessageFromActiveList(messageText);
-}, randomRepostDelay);
-
+    function scheduleRepost(messageText) {
+        // Random delay between 5 to 15 seconds for example
+        let randomRepostDelay = 7000 + Math.random() * 5000;
+        const repostTimer = setInterval(() => {
+            postMessageFromActiveList(messageText);
+        }, randomRepostDelay);
+    
         // Store the timer for later reference (associated with the message text)
         repostTimers.set(messageText, repostTimer);
     }
+    
 
     function postMessageFromActiveList(messageText) {
         // Create a new message element and post it to the bulletin board
