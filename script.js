@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         socket.emit('join', 'board');
 
         socket.on('approved message', function (msg) {
-            displayMessage(msg); // Display the approved message on board.html
+            displayMessage(msg); 
             approvedMessagesArray.push(msg);  // Add the approved message to the array
             scheduleRepost(msg);  // Schedule reposting for the new message
         });
@@ -223,19 +223,21 @@ approveButton.addEventListener('click', function () {
         // Random delay between 5 to 15 seconds for example
         let randomRepostDelay = 7000 + Math.random() * 5000;
         const repostTimer = setInterval(() => {
-            postMessageFromActiveList(messageText);
+            postMessageFromActiveList();
         }, randomRepostDelay);
     
         // Store the timer for later reference (associated with the message text)
         repostTimers.set(messageText, repostTimer);
     }
     
-
-    function postMessageFromActiveList(messageText) {
-        // Create a new message element and post it to the bulletin board
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message');
-        messageElement.textContent = messageText;
+    function postMessageFromActiveList() {
+        if (approvedMessagesArray.length > 0) {
+            const randomIndex = Math.floor(Math.random() * approvedMessagesArray.length);
+            const messageText = approvedMessagesArray[randomIndex];
+            // Create a new message element and post it to the bulletin board
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.textContent = messageText;
 
         // Calculate a random line that is not already occupied
         const randomLine = getRandomLine(bulletinBoard);
@@ -251,6 +253,7 @@ approveButton.addEventListener('click', function () {
         // Animate the message
         animateMessage(messageElement);
     }
+}
 
     function resolveCollision(newMessageElement, desiredTop) {
         // Get the height of a message (line height)
