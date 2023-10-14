@@ -141,14 +141,14 @@ approveButton.addEventListener('click', function () {
         // Update the last post time
         lastPostTime = Date.now();
 
-        // Check if the Active Message List has exceeded the maximum limit
-        if (approvedMessagesList.children.length > maxApprovedMessages) {
-            // Remove the oldest message from the Active Message List
-            const oldestMessage = approvedMessagesList.firstElementChild;
-            approvedMessagesList.removeChild(oldestMessage);
-            // Clear the repost timer for the removed message
-            clearRepostTimer(oldestMessage.textContent);
-        }
+    // Check if the Active Message List has exceeded the maximum limit
+    if (approvedMessagesList && approvedMessagesList.children.length > maxApprovedMessages) {
+        // Remove the oldest message from the Active Message List
+        const oldestMessage = approvedMessagesList.firstElementChild;
+        approvedMessagesList.removeChild(oldestMessage);
+        // Clear the repost timer for the removed message
+        clearRepostTimer(oldestMessage.textContent);
+    }
 
         // Schedule reposting of the message
         scheduleRepost(messageText, messageElement);
