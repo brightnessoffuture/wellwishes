@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     const bulletinBoard = document.querySelector('.bulletin-board');
+    const approvedMessagesList = document.getElementById('approvedMessages');
+    let lastPostTime = Date.now();
+    const maxApprovedMessages = 20;
 
     if (bulletinBoard) {
         initBoard();
@@ -20,9 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function initMain() {
         const messageInput = document.getElementById('messageInput');
         const postButton = document.getElementById('postButton');
-        const approvedMessagesList = document.getElementById('approvedMessages');
-        let lastPostTime = Date.now();
-        const maxApprovedMessages = 20;
 
         if (document.getElementById('pendingMessages')) {
             console.log("Joining moderator room");
