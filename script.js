@@ -19,9 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         socket.emit('join', 'board');
 
         socket.on('approved message', function (msg) {
-            displayMessage(msg); 
-            approvedMessagesArray.push(msg);  // Add the approved message to the array
-            scheduleRepost(msg);  // Schedule reposting for the new message
+            displayMessage(msg);
         });
 
         socket.on('load approved messages', function (messages) {
@@ -33,6 +31,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 }, randomDelay);
             });
         });
+
+        socket.on('delete message', function (messageText, listType) {
+            if (listType === 'approved') {
+                const messageElements = bulletinBoard.querySelectorAll('.message');
+                messageElements.forEach(messageElement => {
+                    if (messageElement.textContent === messageText) {
+                        messageElement.remove();
+                    }
+                });
+                // Clear the repost timer for the deleted message
+                clearRepostTimer(messageText);
+            }
+        });
+        
     }
 
     function initMain() {
