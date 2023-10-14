@@ -106,18 +106,17 @@ button {
     align-items: center;
 }
 
-#flex-container {
+.flex-container {
     display: flex;
-    align-items: center; /* Vertically center aligns items */
-    margin: 0 auto;
-    max-width: 800px; /* Adjust the width as needed */
+    align-items: center; /* Vertically center-aligns the items */
+    margin-top: 20px; /* Adds space between the bulletin board and the flex container */
 }
 
-#qr-code {
-    flex: 1; /* Gives equal weight, ensuring that the space is distributed equally between the qr-code and text divs */
+.qr-code {
+    margin-right: 20px; /* Adjust this value to add space between the QR code and message */
 }
 
-#text {
-    flex: 1; /* Gives equal weight, ensuring that the space is distributed equally between the qr-code and text divs */
-    text-align: left; /* Aligns the text to the left */
+.message-side {
+    text-align: left;
+    /* Any other styling you want for the message */
 }
