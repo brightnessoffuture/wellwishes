@@ -60,6 +60,8 @@ console.log("Pending messages:", pendingMessages);
         if (index > -1) {
             list.splice(index, 1);
         }
+                // You might want to forward the listType as well to ensure clients handle the deletion correctly
+                socket.broadcast.emit('delete message', msg, listType);
         console.log(`${listType} messages after delete:`, list);
     });
 });
