@@ -55,3 +55,12 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+socket.on('delete message', (msg, listType) => {
+    let list = listType === 'approved' ? approvedMessages : pendingMessages;
+    const index = list.indexOf(msg);
+    if (index > -1) {
+        list.splice(index, 1);
+    }
+    console.log(`${listType} messages after delete:`, list);
+});

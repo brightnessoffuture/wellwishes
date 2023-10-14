@@ -71,6 +71,7 @@ approveButton.addEventListener('click', function () {
         deleteButton.textContent = 'Delete';
         deleteButton.addEventListener('click', function () {
             pendingMessagesList.removeChild(pendingMessageItem);
+            socket.emit('delete message', messageText, 'approved');
         });
         
         pendingMessageItem.appendChild(approveButton);
@@ -172,6 +173,8 @@ approveButton.addEventListener('click', function () {
             // Remove from approved message list
             approvedMessagesList.removeChild(messageListItem);
             
+            socket.emit('delete message', messageText, 'approved');
+
             // Remove from the bulletin board
             const bulletinMessages = bulletinBoard.querySelectorAll('.message');
             for (const msgElement of bulletinMessages) {
