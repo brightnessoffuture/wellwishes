@@ -20,12 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (pauseButton && startButton) {
         // Set up event listeners
         pauseButton.addEventListener('click', function() {
-            // Send the pause command to the server
+            console.log('Pause button clicked');  // Log the button click
             socket.emit('toggle reposting', 'pause');
         });
-
+    
         startButton.addEventListener('click', function() {
-            // Send the start command to the server
+            console.log('Start button clicked');  // Log the button click
             socket.emit('toggle reposting', 'start');
         });
     }

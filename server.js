@@ -52,15 +52,17 @@ console.log("Pending messages:", pendingMessages);
         io.emit('approved message', msg);
     });
 
-    socket.on('toggle reposting', (command) => {  // New event handler
+    socket.on('toggle reposting', function(command) {
+        console.log('Received toggle reposting command:', command);  // Log the received command
         if (command === 'pause') {
             isRepostingPaused = true;
+            console.log('Reposting is now paused');  // Log the state change
         } else if (command === 'start') {
             isRepostingPaused = false;
-            // Reschedule reposting for all messages if necessary
-            // ...
+            console.log('Reposting is now resumed');  // Log the state change
         }
     });
+
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
