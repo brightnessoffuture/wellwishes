@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    height: 100vh;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -25,16 +24,8 @@ h1 {
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.moderation-area {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #333;
-    border-radius: 4px;
-    margin-top: 20px;
-    max-height: 800px; /* or whatever height you prefer */
-    overflow-y: auto; /* enables vertical scrolling */
+    flex-direction: column;
+    align-items: center; /* Optional: to center-align the button below the textarea */
 }
 
 input[type="text"],
@@ -117,4 +108,14 @@ button {
 .message-side {
     text-align: left;
     /* Any other styling you want for the message */
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: flex-end;  /* Aligns the buttons to the right */
+    gap: 10px;  /* Provides spacing between the buttons */
+}
+
+.buttons-div button {
+    /* Optional: Apply any other styles you want for the buttons */
 }

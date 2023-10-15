@@ -122,24 +122,30 @@ function addPendingMessage(messageText) {
     const pendingMessageItem = document.createElement('li');
     pendingMessageItem.textContent = messageText;
     
+    const buttonsDiv = document.createElement('div');  // Create a new div to hold the buttons
+    buttonsDiv.classList.add('buttons-div');  // Assign a class to this div
+    
     const approveButton = document.createElement('button');
-approveButton.textContent = 'Approve';
-approveButton.addEventListener('click', function () {
-socket.emit('approve message', messageText); // Emit an event to approve the message
-pendingMessagesList.removeChild(pendingMessageItem);
-});
+    approveButton.textContent = 'Approve';
+    approveButton.addEventListener('click', function () {
+        socket.emit('approve message', messageText); // Emit an event to approve the message
+        pendingMessagesList.removeChild(pendingMessageItem);
+    });
     
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.addEventListener('click', function () {
         pendingMessagesList.removeChild(pendingMessageItem);
-        socket.emit('delete message', messageText, 'approved');
+        socket.emit('delete message', messageText, 'pending');  // Changed 'approved' to 'pending' as the message is in pending list
     });
     
-    pendingMessageItem.appendChild(approveButton);
-    pendingMessageItem.appendChild(deleteButton);
+    buttonsDiv.appendChild(approveButton);  // Append the buttons to the new div
+    buttonsDiv.appendChild(deleteButton);
+    pendingMessageItem.appendChild(buttonsDiv);  // Append the div to the pendingMessageItem
+    
     pendingMessagesList.appendChild(pendingMessageItem);
 }
+
 function postMessage() {
     const messageText = messageInput.value.trim();
     if (messageText !== '') {
