@@ -6,14 +6,24 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="script.js"></script>
+    <script>
+        const socket = io();
+        socket.on('new message', function(msg){
+          // Add your code to display the message here
+        });
+      </script>
     <title>Message Bulletin Board</title>
 </head>
 <body>
     <div class="container">
+        <h1>Message Bulletin Board</h1>
         <h1>Well Wishes Board</h1>
         <div class="message-input">
             <input type="text" id="messageInput" placeholder="Enter your message">
             <button id="postButton">Post</button>
+        </div>
+        <div class="bulletin-board">
+            <!-- Messages will be displayed here -->
         </div>
         <div class="approved-message-list">
             <h2>Approved Message List</h2>
@@ -21,9 +31,6 @@
                 <!-- Approved messages will be listed here -->
             </ul>
         </div>
-    </div>
-    <div class="status" id="status"><p>Status: Showing</p></div>
-    <div>
         <div><button id="pauseButton">Pause Reposting</button>
             <button id="startButton">Start Reposting</button>
             </div>

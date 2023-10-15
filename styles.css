@@ -8,7 +8,6 @@ body {
     align-items: center;
     background-color: #f0f0f0;
 }
-
 .container {
     width: 80%;
     padding: 20px;
@@ -17,12 +16,10 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 h1 {
     font-size: 24px;
     margin-bottom: 20px;
 }
-
 .message-input {
     display: flex;
     justify-content: center;
@@ -49,7 +46,6 @@ button {
     color: #fff;
     border-radius: 4px;
 }
-
 .bulletin-board {
     border: 2px solid #333;
     width: 100%;
@@ -60,7 +56,6 @@ button {
     margin-bottom: 20px;
     border-radius: 4px;
 }
-
 /* Add styles for the message elements */
 .message {
     white-space: nowrap;
@@ -68,7 +63,6 @@ button {
     right: 100%;
     /* animation: moveLeft 25s linear forwards;*/
 }
-
 @keyframes moveLeft {
     from {
         left: 100%; /* Start from the right edge of the bulletin */
@@ -77,15 +71,12 @@ button {
         left: -100%; /* Move to the left edge of the bulletin */
     }
 }
-
 .message:nth-child(odd) {
     padding-top: 10px;
 }
-
 .message:nth-child(even) {
     padding-top: 10px;
 }
-
 .moderation-area {
     width: 100%;
     padding: 10px;
@@ -93,13 +84,11 @@ button {
     border-radius: 4px;
     margin-top: 20px;
 }
-
 .moderation-area ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
-
 .moderation-area li {
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -107,17 +96,14 @@ button {
     justify-content: space-between;
     align-items: center;
 }
-
 .flex-container {
     display: flex;
     align-items: center; /* Vertically center-aligns the items */
     margin-top: 20px; /* Adds space between the bulletin board and the flex container */
 }
-
 .qr-code {
     margin-right: 20px; /* Adjust this value to add space between the QR code and message */
 }
-
 .message-side {
     text-align: left;
     /* Any other styling you want for the message */

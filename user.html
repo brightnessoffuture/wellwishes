@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <script src="script.js"></script>
+    <title>Message Bulletin Board - User</title>
     <title>WxW Well Wishes Board</title>
 </head>
 
 <body>
     <div class="container">
+        <h1>Message Bulletin Board</h1>
         <h1>Post your message below to be displayed on the screen!</h1>
         <div class="message-input">
+            <input type="text" id="messageInput" placeholder="Enter your message">
             <textarea id="messageInput" rows="5" cols="30" placeholder="Enter your message"></textarea>
             <button id="postButton">Post</button>
         </div>
     </div>
 </body>
-
 </html>
