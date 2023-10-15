@@ -97,12 +97,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         socket.on('load pending messages', function (messages) {
-            console.log("Received pending messages:", messages);
+            console.log("Received pending messages:", messages);  // New line
             for (let msg of messages) {
                 addPendingMessage(msg);
             }
         });
-
         socket.on('load approved messages', function (messages) {
             console.log("Received approved messages:", messages);
             messages.forEach((msg, index) => {
@@ -139,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const pendingMessagesList = document.getElementById('pendingMessages');
         const pendingMessageItem = document.createElement('li');
         pendingMessageItem.textContent = messageText;
+        pendingMessagesList.appendChild(pendingMessageItem);
         
         const approveButton = document.createElement('button');
 approveButton.textContent = 'Approve';
@@ -156,7 +156,6 @@ approveButton.addEventListener('click', function () {
         
         pendingMessageItem.appendChild(approveButton);
         pendingMessageItem.appendChild(deleteButton);
-        pendingMessagesList.appendChild(pendingMessageItem);
     }
 
     function postMessage() {

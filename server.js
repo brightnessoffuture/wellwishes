@@ -33,9 +33,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('new message', (msg) => {
-        console.log('Received new message:', msg);  // Log the received message
+        console.log('Received new message:', msg);  // Existing line
         pendingMessages.push(msg);
+        console.log('Pending Messages:', pendingMessages);  // New line
         io.to('moderator').emit('new message', msg);
+        console.log('Emitting new message to moderator room');  // New line
     });
 
     socket.on('approve message', (msg) => {
