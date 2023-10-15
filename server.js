@@ -47,6 +47,12 @@ let isRepostingPaused = false;
 io.on('connection', (socket) => {
     console.log('a user connected');
 
+    socket.on('preload messages', () => {
+        console.log('Preloading messages');
+        io.to('board').emit('load approved messages', approvedMessages);
+    });
+    
+
     socket.on('join', (room) => {
         socket.join(room);
         if (room === 'moderator') {
