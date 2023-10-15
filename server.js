@@ -7,8 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const pendingMessages = [];
-const approvedMessages = [
+const pendingMessages = [
     "I am truly regretful I am unable to attend due to last minute commitments. I wish you and your wife to be a blissful marriage and have a enjoyable wedding! ",
     "Blissful marriage EX-SPL HAHA",
     "Blissful matrimony! (:",
@@ -39,6 +38,7 @@ const approvedMessages = [
     "祝福 Chonghao & Lifang长长久久，圆满幸福！",
     "Yeetbro 🤰🏻",
 ];
+const approvedMessages = [];
 
 app.use(express.static(__dirname));
 
@@ -46,11 +46,6 @@ let isRepostingPaused = false;
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-
-    socket.on('preload messages', () => {
-        console.log('Preloading messages');
-        io.to('board').emit('load approved messages', approvedMessages);
-    });
     
 
     socket.on('join', (room) => {

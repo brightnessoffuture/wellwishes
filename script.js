@@ -148,12 +148,6 @@ function postMessage() {
         messageInput.value = '';
     }
 }
-const preloadButton = document.getElementById('preloadButton');
-if (preloadButton) {
-    preloadButton.addEventListener('click', function() {
-        socket.emit('preload messages');
-    });
-}
 
 }
 function displayMessage(messageText) {

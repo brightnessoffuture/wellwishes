@@ -27,6 +27,16 @@ h1 {
     margin-bottom: 20px;
 }
 
+.moderation-area {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    margin-top: 20px;
+    max-height: 800px; /* or whatever height you prefer */
+    overflow-y: auto; /* enables vertical scrolling */
+}
+
 input[type="text"],
 textarea {
     width: 70%;
