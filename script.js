@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Get references to the buttons
         const pauseButton = document.getElementById('pauseButton');
         const startButton = document.getElementById('startButton');
+        const statusElement = document.getElementById('status');
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     const bulletinBoard = document.querySelector('.bulletin-board');
     const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
@@ -19,15 +20,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (pauseButton && startButton) {
         // Set up event listeners
-        pauseButton.addEventListener('click', function() {
-            console.log('Pause button clicked');  // Log the button click
+        pauseButton.addEventListener('click', function () {
             socket.emit('toggle reposting', 'pause');
+            updateStatus('Paused');
         });
-    
-        startButton.addEventListener('click', function() {
-            console.log('Start button clicked');  // Log the button click
+
+        startButton.addEventListener('click', function () {
             socket.emit('toggle reposting', 'start');
+            updateStatus('Showing');
         });
+    }
+
+    function updateStatus(status) {
+        statusElement.textContent = `Status: ${status}`;
     }
 
     function initBoard() {
