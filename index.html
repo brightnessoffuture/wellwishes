@@ -21,11 +21,15 @@
             <input type="text" id="messageInput" placeholder="Enter your message">
             <button id="postButton">Post</button>
         </div>
-        <div class="status" id="status">Status: Showing</div>
-        <div>
-            <button id="pauseButton">Pause Reposting</button>
-            <button id="startButton">Start Reposting</button>
+        <div class="approved-message-list">
+            <h2>Approved Message List</h2>
+            <ul id="approvedMessages">
+                <!-- Approved messages will be listed here -->
+            </ul>
         </div>
+        <div><button id="pauseButton">Pause Reposting</button>
+            <button id="startButton">Start Reposting</button>
+            </div>
         <div class="moderation-area">
             <h2>Pending Messages</h2>
             <ul id="pendingMessages">
