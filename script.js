@@ -162,7 +162,8 @@ approveButton.addEventListener('click', function () {
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            socket.emit('new message', messageText);  // Emit the message to the server
+            console.log('Emitting new message:', messageText);  // Add this line
+            socket.emit('new message', messageText);  // Existing line
             messageInput.value = '';
         }
     }
