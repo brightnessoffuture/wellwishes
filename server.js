@@ -33,9 +33,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('new message', (msg) => {
-      // Add message to pending messages
-    pendingMessages.push(msg);
-        // When a user sends a message, emit it to the moderator's room
+        console.log('Received new message:', msg);  // Log the received message
+        pendingMessages.push(msg);
         io.to('moderator').emit('new message', msg);
     });
 

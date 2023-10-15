@@ -117,7 +117,10 @@ document.addEventListener("DOMContentLoaded", function () {
             displayMessage(msg);
         });
 
-        postButton.addEventListener('click', postMessage);
+        postButton.addEventListener('click', () => {
+            postMessage();
+            console.log('Post button clicked');
+        });
 
         messageInput.addEventListener('keydown', function (event) {
             if (event.key === 'Enter' && document.activeElement === messageInput) {
@@ -159,8 +162,7 @@ approveButton.addEventListener('click', function () {
     function postMessage() {
         const messageText = messageInput.value.trim();
         if (messageText !== '') {
-            // Always emit the message to the server
-            socket.emit('new message', messageText);
+            socket.emit('new message', messageText);  // Emit the message to the server
             messageInput.value = '';
         }
     }
