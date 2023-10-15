@@ -127,12 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-    if (bulletinBoard) {
-        // Only execute this block if bulletinBoard exists in the current HTML file
-        socket.on('new message', function (msg) {
-            addPendingMessage(msg);
-        });
-    }
+        if (document.getElementById('pendingMessages')) {
+            socket.on('new message', function (msg) {
+                addPendingMessage(msg);
+            });
+        }
 
     function addPendingMessage(messageText) {
         const pendingMessagesList = document.getElementById('pendingMessages');
