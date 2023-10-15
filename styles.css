@@ -121,3 +121,23 @@ button {
 .buttons-div button {
     /* Optional: Apply any other styles you want for the buttons */
 }
+
+/* Inside styles.css */
+.grid-container {
+    display: grid;
+    grid-template-rows: 1fr 1fr; /* creates two rows each taking up 50% of the vertical space */
+    height: 100vh; /* makes sure your grid takes up the full height of the viewport */
+}
+
+.row-1, .row-2 {
+    display: flex; /* using flexbox to organize content within each row */
+    align-items: center; /* centering items vertically */
+    justify-content: center; /* centering items horizontally */
+    flex-direction: column; /* stacking items vertically within each row */
+}
+
+/* Adjusting the QR code size responsively */
+.qr-code img {
+    max-width: 100%; /* ensures the image doesn't overflow its container */
+    height: auto; /* maintains the aspect ratio */
+}
