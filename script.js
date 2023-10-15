@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastPostTime = Date.now();
     const maxApprovedMessages = 40;
     const approvedMessagesArray = [];
-    let isRepostingPaused = false;
 
     if (qrCode) {
         initBoard();
