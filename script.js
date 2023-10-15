@@ -346,11 +346,16 @@ approveButton.addEventListener('click', function () {
             console.log('Cleared repost timer for:', messageText);  // Add this line
         }
     }
-
+    
     function displayApprovedMessage(messageText) {
-        const approvedMessagesList = document.getElementById('approvedMessages');
-        const approvedMessageItem = document.createElement('li');
-        approvedMessageItem.textContent = messageText;
-        approvedMessagesList.appendChild(approvedMessageItem);
+        const bulletinBoard = document.getElementById('bulletinBoard');
+        if (bulletinBoard) {
+            const approvedMessageItem = document.createElement('div');
+            approvedMessageItem.classList.add('message');  // Assuming you have a 'message' class for styling
+            approvedMessageItem.textContent = messageText;
+            bulletinBoard.appendChild(approvedMessageItem);
+        } else {
+            console.warn('Element with id "bulletinBoard" not found.');
+        }
     }
 });
