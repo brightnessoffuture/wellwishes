@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Joining board room");
         socket.emit('join', 'board');
 
-        socket.on('approved message', function (msg) {
-            displayMessage(msg);
+        socket.on('approved message', function(msg) {
+            displayApprovedMessage(msg);
         });
 
         socket.on('load approved messages', function (messages) {
@@ -112,8 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-        socket.on('approved message', function (msg) {
-            displayMessage(msg);
+        socket.on('approved message', function(msg) {
+            displayApprovedMessage(msg);
         });
 
         postButton.addEventListener('click', () => {
@@ -345,5 +345,12 @@ approveButton.addEventListener('click', function () {
             repostTimers.delete(messageText);
             console.log('Cleared repost timer for:', messageText);  // Add this line
         }
+    }
+
+    function displayApprovedMessage(messageText) {
+        const approvedMessagesList = document.getElementById('approvedMessages');
+        const approvedMessageItem = document.createElement('li');
+        approvedMessageItem.textContent = messageText;
+        approvedMessagesList.appendChild(approvedMessageItem);
     }
 });
