@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             messages.forEach((msg, index) => {
                 let randomDelay = Math.random() * 3000;
                 setTimeout(() => {
-                    displayMessage(msg);
+                    displayApprovedMessage(msg);  // Changed to displayApprovedMessage
                 }, randomDelay);
             });
         });
@@ -354,12 +354,16 @@ approveButton.addEventListener('click', function () {
             const approvedMessageItem = document.createElement('div');
             approvedMessageItem.classList.add('message');  
             approvedMessageItem.textContent = messageText;
+            // More code for positioning and animating the message
             bulletinBoard.appendChild(approvedMessageItem);
+            animateMessage(approvedMessageItem);  // Assuming animateMessage is a function that handles animation
             console.log('Message appended:', approvedMessageItem);  // Add this line
         } else {
             console.warn('Element with id "bulletinBoard" not found.');
         }
     }
+
+
     
     
 
