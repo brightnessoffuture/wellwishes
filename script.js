@@ -247,9 +247,6 @@ function scheduleRepost(messageText) {
     let randomRepostDelay = 7000 + Math.random() * 5000;
     const repostTimer = setInterval(() => {
         postMessageFromActiveList(messageText);  // pass the messageText argument here
-        if (!isRepostingPaused) {  // Check the pause flag before reposting
-            postMessageFromActiveList(messageText);
-        }
     }, randomRepostDelay);
 
     // Store the timer for later reference (associated with the message text)
