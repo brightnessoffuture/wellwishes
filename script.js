@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const startButton = document.getElementById('startButton');
         const statusElement = document.getElementById('status');
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
-    const bulletinBoard = document.querySelector('.bulletin-board');
     const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
     const approvedMessagesList = document.getElementById('approvedMessages');
     let lastPostTime = Date.now();
@@ -40,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         socket.emit('join', 'board');
 
         socket.on('approved message', function(msg) {
+            console.log('Approved message received:', msg);  // Log the received message
             displayApprovedMessage(msg);
         });
 

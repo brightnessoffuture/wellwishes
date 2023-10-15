@@ -41,6 +41,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('approve message', (msg) => {
+        console.log('Approve message received:', msg);  // Log the received message
       // Move the message from pending to approved
     const index = pendingMessages.indexOf(msg);
     if (index > -1) {
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
 console.log("Pending messages:", pendingMessages);
         // When a moderator approves a message, emit it to all users (including other moderators)
         io.emit('approved message', msg);
-        io.to('board').emit('approved message', msg);  // Ensure this line is present and correct
+        console.log('Approved message emitted:', msg);  // Log the emitted message
     });
 
     socket.on('toggle reposting', function(command) {
