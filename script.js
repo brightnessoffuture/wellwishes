@@ -348,15 +348,21 @@ approveButton.addEventListener('click', function () {
     }
 
     function displayApprovedMessage(messageText) {
-        const bulletinBoard = document.getElementById('bulletin-board');  // Updated line
+        const bulletinBoard = document.getElementById('bulletinBoard');
+        const approvedMessagesList = document.getElementById('approvedMessages');
         if (bulletinBoard) {
             const approvedMessageItem = document.createElement('div');
-            approvedMessageItem.classList.add('message');
+            approvedMessageItem.classList.add('message');  // Assuming you have a 'message' class for styling
             approvedMessageItem.textContent = messageText;
             bulletinBoard.appendChild(approvedMessageItem);
+        } else if (approvedMessagesList) {
+            const messageListItem = document.createElement('li');
+            messageListItem.textContent = messageText;
+            approvedMessagesList.appendChild(messageListItem);
         } else {
-            console.warn('Element with id "bulletin-board" not found.');  // Updated line
+            console.warn('No element to display the approved message found.');
         }
     }
+    
 
 });
