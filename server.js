@@ -51,6 +51,7 @@ io.on('connection', (socket) => {
 console.log("Pending messages:", pendingMessages);
         // When a moderator approves a message, emit it to all users (including other moderators)
         io.emit('approved message', msg);
+        io.to('board').emit('approved message', msg);  // Ensure this line is present and correct
     });
 
     socket.on('toggle reposting', function(command) {
