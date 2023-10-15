@@ -12,6 +12,8 @@ const approvedMessages = [];
 
 app.use(express.static(__dirname));
 
+let isRepostingPaused = false;
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
@@ -48,6 +50,16 @@ io.on('connection', (socket) => {
 console.log("Pending messages:", pendingMessages);
         // When a moderator approves a message, emit it to all users (including other moderators)
         io.emit('approved message', msg);
+    });
+
+    socket.on('toggle reposting', (command) => {  // New event handler
+        if (command === 'pause') {
+            isRepostingPaused = true;
+        } else if (command === 'start') {
+            isRepostingPaused = false;
+            // Reschedule reposting for all messages if necessary
+            // ...
+        }
     });
 
     socket.on('disconnect', () => {

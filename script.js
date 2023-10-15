@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+        // Get references to the buttons
+        const pauseButton = document.getElementById('pauseButton');
+        const startButton = document.getElementById('startButton');
     const socket = io.connect('https://wellwishes-8bf7e15b4939.herokuapp.com/');
     const bulletinBoard = document.querySelector('.bulletin-board');
     const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
@@ -6,12 +9,25 @@ document.addEventListener("DOMContentLoaded", function () {
     let lastPostTime = Date.now();
     const maxApprovedMessages = 40;
     const approvedMessagesArray = [];
-
+    let isRepostingPaused = false;
 
     if (qrCode) {
         initBoard();
     } else {
         initMain();
+    }
+
+    if (pauseButton && startButton) {
+        // Set up event listeners
+        pauseButton.addEventListener('click', function() {
+            // Send the pause command to the server
+            socket.emit('toggle reposting', 'pause');
+        });
+
+        startButton.addEventListener('click', function() {
+            // Send the start command to the server
+            socket.emit('toggle reposting', 'start');
+        });
     }
 
     function initBoard() {
@@ -46,6 +62,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 // Clear the repost timer for the deleted message
                 clearRepostTimer(messageText);
+            }
+        });
+
+        socket.on('toggle reposting', function(command) {
+            if (command === 'pause') {
+                isRepostingPaused = true;
+            } else if (command === 'start') {
+                isRepostingPaused = false;
+                // Reschedule reposting for all messages if necessary
+                approvedMessagesArray.forEach(msg => {
+                    scheduleRepost(msg);
+                });
             }
         });
         
@@ -243,11 +271,14 @@ approveButton.addEventListener('click', function () {
     const repostTimers = new Map();
 
     function scheduleRepost(messageText) {
+        if (isRepostingPaused) return;  // Do nothing if reposting is paused
         console.log('Scheduling repost for:', messageText);
         // Random delay between 5 to 15 seconds for example
         let randomRepostDelay = 7000 + Math.random() * 5000;
         const repostTimer = setInterval(() => {
-            postMessageFromActiveList(messageText);  // pass the messageText argument here
+            if (!isRepostingPaused) {  // Check the pause flag before reposting
+                postMessageFromActiveList(messageText);
+            }
         }, randomRepostDelay);
     
         // Store the timer for later reference (associated with the message text)
@@ -255,6 +286,7 @@ approveButton.addEventListener('click', function () {
     }
     
     function postMessageFromActiveList(messageText) {  // accept a messageText argument here
+        if (isRepostingPaused) return;  // Exit early if reposting is paused
         console.log('Reposting message:', messageText);
         // Create a new message element and post it to the bulletin board
         const messageElement = document.createElement('div');
