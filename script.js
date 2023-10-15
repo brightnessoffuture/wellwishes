@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
     const approvedMessagesList = document.getElementById('approvedMessages');
     let lastPostTime = Date.now();
-    const maxApprovedMessages = 20;
+    const maxApprovedMessages = 40;
     const approvedMessagesArray = [];
 
 
