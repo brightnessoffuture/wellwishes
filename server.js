@@ -61,7 +61,9 @@ console.log("Pending messages:", pendingMessages);
             isRepostingPaused = false;
             console.log('Reposting is now resumed');  // Log the state change
         }
+        io.emit('toggle reposting', command);  // Emit the command to all clients
     });
+    
 
 
     socket.on('disconnect', () => {
