@@ -191,7 +191,7 @@ function getRandomLine(bulletinBoard) {
     // Calculate the available vertical space within the bulletin board
     const bulletinHeight = bulletinBoard.clientHeight;
     // Calculate the maximum number of lines based on the message height
-    const maxLines = Math.floor(bulletinHeight / 20); // Adjust the line height as needed
+    const maxLines = Math.floor(bulletinHeight / 28); // Adjust the line height as needed
     // Generate a random line number within the available space
     const randomLine = Math.floor(Math.random() * maxLines);
     // Calculate the vertical position based on the line number
