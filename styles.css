@@ -52,7 +52,6 @@ button {
     font-size: 24px;
     width: 100%;
     height: 100%;  /* Adjusted height */
-    padding: 100%;
     overflow: hidden;
     position: relative;
     margin-bottom: 20px;
@@ -123,12 +122,13 @@ button {
 }
 
 .grid-container {
-    display: grid;
-    grid-template-rows: 1fr 1fr; /* maintains 50%/50% vertical division */
+    display: flex;
+    flex-direction: column;
     height: 100vh;
 }
 
 .row-1 {
+    flex: 3;  /* Adjust this value to control the space taken by row-1 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,11 +136,13 @@ button {
 }
 
 .row-2 {
+    flex: 1;  /* Adjust this value to control the space taken by row-2 */
     display: flex;
     align-items: center;
     justify-content: flex-start; /* aligns children to the left */
     flex-direction: row; /* positions children side by side */
     padding: 0 20px; /* optional: adds some padding */
+    min-height: 300px; /* Adjust this value to ensure a minimum height for row-2 */
 }
 
 .qr-code img {
