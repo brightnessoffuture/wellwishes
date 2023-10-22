@@ -165,7 +165,7 @@ function displayMessage(messageText) {
     // Detect and resolve collisions
     const collisionResolvedTop = resolveCollision(messageElement, randomLine);
     // Set the top position for the message
-    messageElement.style.top = collisionResolvedTop + 'px';
+    messageElement.style.marginTop = collisionResolvedTop + 'px';
     bulletinBoard.appendChild(messageElement);
     // Animate the message
     animateMessage(messageElement);
@@ -275,7 +275,7 @@ function postMessageFromActiveList(messageText) {  // accept a messageText argum
     const collisionResolvedTop = resolveCollision(messageElement, randomLine);
 
     // Set the top position for the message
-    messageElement.style.top = collisionResolvedTop + 'px';
+    messageElement.style.marginTop = collisionResolvedTop + 'px';
 
     bulletinBoard.appendChild(messageElement);
 
@@ -290,7 +290,7 @@ function resolveCollision(newMessageElement, desiredTop) {
     let top = desiredTop;
     // Check for collisions with existing messages
     for (const existingMessage of existingMessages) {
-        const existingTop = parseInt(existingMessage.style.top, 10);
+        const existingTop = parseInt(existingMessage.style.marginTop, 10);
         const existingBottom = existingTop + messageHeight;
         if (top >= existingTop && top < existingBottom) {
             // Collision detected, adjust the top position
