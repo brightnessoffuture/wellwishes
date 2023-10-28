@@ -287,15 +287,22 @@ function resolveCollision(newMessageElement, desiredTop) {
     const existingMessages = bulletinBoard.querySelectorAll('.message');
     let top = desiredTop;
     // Check for collisions with existing messages
+    // find free space to put
+    const freeTops = new Set()
+    for(const i= 0; i <19; i++){
+        freeTops.add(i*20)
+    }
     for (const existingMessage of existingMessages) {
         const existingTop = parseInt(existingMessage.style.marginTop, 10);
         const existingBottom = existingTop + messageHeight;
-        if (top >= existingTop && top < existingBottom) {
+        if (freeTops.has(existingTop)) {
             // Collision detected, adjust the top position
-            top = existingBottom;
+            freeTops.delete(existingTop)
         }
     }
-    return top;
+    if(freeTops){
+        return [...freeTops][0]
+    }
 }
 function clearRepostTimer(messageText) {
     const repostTimer = repostTimers.get(messageText);
