@@ -40,7 +40,7 @@ function initBoard() {
     socket.on('load approved messages', function (messages) {
         console.log("Received approved messages:", messages);
         messages.forEach((msg, index) => {
-            let randomDelay = Math.random() * 5000;
+            let randomDelay = Math.random() * 7000;
             setTimeout(() => {
                 displayMessage(msg);
             }, randomDelay);
@@ -96,7 +96,7 @@ function initMain() {
     socket.on('load approved messages', function (messages) {
         console.log("Received approved messages:", messages);
         messages.forEach((msg, index) => {
-            let randomDelay = Math.random() * 3000;
+            let randomDelay = Math.random() * 7000;
             setTimeout(() => {
                 displayMessage(msg);
             }, randomDelay);
