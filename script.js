@@ -166,7 +166,7 @@ function displayMessage(messageText) {
     const collisionResolvedTop = resolveCollision(messageElement, randomLine);
     // Set the top position for the message
     messageElement.style.marginTop = collisionResolvedTop + 'px';
-    bulletinBoard.appendChild(messageElement);
+    if(collisionResolvedTop <= 380) bulletinBoard.appendChild(messageElement);
     // Animate the message
     animateMessage(messageElement);
     // Update the last post time
