@@ -275,8 +275,7 @@ function postMessageFromActiveList(messageText) {  // accept a messageText argum
     const collisionResolvedTop = resolveCollision(messageElement, randomLine);
     // Set the top position for the message
     messageElement.style.marginTop = collisionResolvedTop + 'px';
-
-    bulletinBoard.appendChild(messageElement);
+    if(collisionResolvedTop <= 380) bulletinBoard.appendChild(messageElement);
 
     // Animate the message
     animateMessage(messageElement);
@@ -296,7 +295,6 @@ function resolveCollision(newMessageElement, desiredTop) {
             top = existingBottom;
         }
     }
-    top > 380 ? top = Math.random() * 380 : top=top
     return top;
 }
 function clearRepostTimer(messageText) {
