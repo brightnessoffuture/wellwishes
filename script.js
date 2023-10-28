@@ -272,9 +272,9 @@ function postMessageFromActiveList(messageText) {  // accept a messageText argum
     const randomLine = getRandomLine(bulletinBoard);
 
     // Detect and resolve collisions
-    const collisionResolvedTop = resolveCollision(messageElement, randomLine);
-    
-    collisionResolvedTop >= 300 ? messageElement.style.marginTop = 0 : collisionResolvedTop=collisionResolvedTop
+    let collisionResolvedTop = resolveCollision(messageElement, randomLine);
+
+    collisionResolvedTop >= 300 ? messageElement.style.marginTop = 300 : collisionResolvedTop=collisionResolvedTop
     // Set the top position for the message
     messageElement.style.marginTop = collisionResolvedTop + 'px';
 
