@@ -7,7 +7,7 @@ const bulletinBoard = document.querySelector('.bulletin-board');
 const qrCode = document.getElementById('uniquetoboard');  // Query for the QR code element
 const approvedMessagesList = document.getElementById('approvedMessages');
 let lastPostTime = Date.now();
-const maxApprovedMessages = 40;
+const maxApprovedMessages = 15;
 const approvedMessagesArray = [];
 
 let isRepostingPaused = false;
@@ -297,7 +297,6 @@ function resolveCollision(newMessageElement, desiredTop) {
         }
     }
     top >= 300 ? top = 300 : top=top
-    console.log(top)
     return top;
 }
 function clearRepostTimer(messageText) {
