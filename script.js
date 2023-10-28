@@ -296,6 +296,7 @@ function resolveCollision(newMessageElement, desiredTop) {
             top = existingBottom;
         }
     }
+    top > 320 ? top = Math.random() * 320 : top=top
     return top;
 }
 function clearRepostTimer(messageText) {
